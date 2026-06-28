@@ -9,15 +9,25 @@ type Props = {
   className?: string;
 };
 
-export function AnimatedCounter({ end, suffix = "", prefix = "", duration = 1400, className }: Props) {
+export function AnimatedCounter({
+  end,
+  suffix = "",
+  prefix = "",
+  duration = 1400,
+  className,
+}: Props) {
   const { ref, inView } = useInView<HTMLSpanElement>();
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     if (!inView) return;
-    const reduce = typeof window !== "undefined"
-      && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setValue(end); return; }
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setValue(end);
+      return;
+    }
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {
@@ -30,5 +40,11 @@ export function AnimatedCounter({ end, suffix = "", prefix = "", duration = 1400
     return () => cancelAnimationFrame(raf);
   }, [inView, end, duration]);
 
-  return <span ref={ref} className={className}>{prefix}{value}{suffix}</span>;
+  return (
+    <span ref={ref} className={className}>
+      {prefix}
+      {value}
+      {suffix}
+    </span>
+  );
 }

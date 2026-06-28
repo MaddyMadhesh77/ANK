@@ -15,7 +15,16 @@ const heightMap = {
   lg: "min-h-[520px] md:min-h-[640px]",
 };
 
-export function Hero({ image, imageAlt, eyebrow, title, subtitle, children, height = "md", align = "left" }: Props) {
+export function Hero({
+  image,
+  imageAlt,
+  eyebrow,
+  title,
+  subtitle,
+  children,
+  height = "md",
+  align = "left",
+}: Props) {
   return (
     <section className={`relative overflow-hidden ${heightMap[height]} flex items-center`}>
       <img

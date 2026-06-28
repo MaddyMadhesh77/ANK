@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { PACKAGE_IMAGES, type Pkg } from "@/lib/site";
 import { Clock, IndianRupee, ArrowRight, Info } from "lucide-react";
 import { PackageDetailDialog } from "@/components/site/PackageDetailDialog";
@@ -40,15 +40,27 @@ export function PackageCard({ pkg }: { pkg: Pkg }) {
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/15" />
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
-            <span className={`absolute top-3 left-3 text-[11px] font-semibold px-2.5 py-1 rounded-full shadow tracking-wide ${tagColor(pkg.tag)}`}>{pkg.tag}</span>
+            <span
+              className={`absolute top-3 left-3 text-[11px] font-semibold px-2.5 py-1 rounded-full shadow tracking-wide ${tagColor(pkg.tag)}`}
+            >
+              {pkg.tag}
+            </span>
             <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-white/90 text-navy text-[11px] font-semibold px-2.5 py-1 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur">
               <Info className="h-3 w-3" /> Details
             </span>
             <div className="absolute bottom-3 left-4 right-4 text-white">
-              <h3 className="font-display text-xl sm:text-2xl font-bold leading-tight text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">{pkg.name}</h3>
+              <h3 className="font-display text-xl sm:text-2xl font-bold leading-tight text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
+                {pkg.name}
+              </h3>
               <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white font-medium [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]">
-                <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{pkg.duration}</span>
-                <span className="inline-flex items-center gap-1"><IndianRupee className="h-3.5 w-3.5" />{pkg.price.replace("From ₹","").replace("From ","")}</span>
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="h-3.5 w-3.5" />
+                  {pkg.duration}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <IndianRupee className="h-3.5 w-3.5" />
+                  {pkg.price.replace("From ₹", "").replace("From ", "")}
+                </span>
               </div>
             </div>
           </button>
@@ -56,18 +68,26 @@ export function PackageCard({ pkg }: { pkg: Pkg }) {
       />
       <div className="p-5 flex-1 flex flex-col">
         <ul className="space-y-1.5 text-sm text-foreground/80 flex-1">
-          {pkg.highlights.slice(0,3).map(h => <li key={h}>• {h}</li>)}
+          {pkg.highlights.slice(0, 3).map((h) => (
+            <li key={h}>• {h}</li>
+          ))}
         </ul>
         <div className="mt-5 grid grid-cols-2 gap-2">
           <PackageDetailDialog
             pkg={pkg}
             trigger={
-              <button type="button" className="inline-flex justify-center items-center gap-1 rounded-full border border-navy/20 text-navy px-3 py-2.5 text-sm font-semibold hover:bg-secondary transition">
+              <button
+                type="button"
+                className="inline-flex justify-center items-center gap-1 rounded-full border border-navy/20 text-navy px-3 py-2.5 text-sm font-semibold hover:bg-secondary transition"
+              >
                 View Details
               </button>
             }
           />
-          <Link to="/contact" className="inline-flex justify-center items-center gap-1.5 rounded-full bg-navy text-navy-foreground px-3 py-2.5 text-sm font-semibold hover:bg-navy/90 transition">
+          <Link
+            to="/contact"
+            className="inline-flex justify-center items-center gap-1.5 rounded-full bg-navy text-navy-foreground px-3 py-2.5 text-sm font-semibold hover:bg-navy/90 transition"
+          >
             Enquire <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>

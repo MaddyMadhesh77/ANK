@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Menu, X, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
@@ -28,26 +28,33 @@ export function Navbar() {
         scrolled ? "shadow-sm" : ""
       }`}
     >
-      <nav className="mx-auto flex h-18 py-3 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Primary">
+      <nav
+        className="mx-auto flex h-18 py-3 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
+        aria-label="Primary"
+      >
         <Link to="/" className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
-          <img src={logo} alt={`${COMPANY.name} logo`} className="h-9 w-9 sm:h-11 sm:w-11 rounded-md object-cover ring-1 ring-border shrink-0" />
+          <img
+            src={logo}
+            alt={`${COMPANY.name} logo`}
+            className="h-9 w-9 sm:h-11 sm:w-11 rounded-md object-cover ring-1 ring-border shrink-0"
+          />
           <span className="font-display font-bold leading-tight text-[13px] sm:text-sm md:text-base text-navy truncate">
             <span className="sm:hidden">ANK Travels</span>
             <span className="hidden sm:inline">{COMPANY.shortName}</span>
           </span>
         </Link>
         <ul className="hidden md:flex items-center gap-8">
-          {links.map(l => (
+          {links.map((l) => (
             <li key={l.to}>
-              <Link
+              <NavLink
                 to={l.to}
-                activeOptions={{ exact: l.to === "/" }}
-                activeProps={{ className: "text-saffron" }}
-                inactiveProps={{ className: "text-foreground hover:text-navy" }}
-                className="text-sm font-medium transition-colors"
+                end={l.to === "/"}
+                className={({ isActive }) =>
+                  `text-sm font-medium transition-colors ${isActive ? "text-saffron" : "text-foreground hover:text-navy"}`
+                }
               >
                 {l.label}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -61,33 +68,54 @@ export function Navbar() {
           >
             <MessageCircle className="h-4 w-4 text-[#25D366]" /> WhatsApp
           </a>
-          <Link to="/plan-trip" className="inline-flex items-center rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground hover:brightness-105 transition shadow-md">
+          <Link
+            to="/plan-trip"
+            className="inline-flex items-center rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground hover:brightness-105 transition shadow-md"
+          >
             Plan Your Trip
           </Link>
         </div>
-        <button className="md:hidden p-2 text-foreground" onClick={() => setOpen(v => !v)} aria-label="Toggle menu" aria-expanded={open}>
+        <button
+          className="md:hidden p-2 text-foreground"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
+        >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </nav>
-      <div className={`md:hidden overflow-hidden transition-all ${open ? "max-h-[28rem] bg-background border-t" : "max-h-0"}`}>
+      <div
+        className={`md:hidden overflow-hidden transition-all ${open ? "max-h-[28rem] bg-background border-t" : "max-h-0"}`}
+      >
         <ul className="flex flex-col gap-1 px-4 pb-4 pt-2">
-          {links.map(l => (
+          {links.map((l) => (
             <li key={l.to}>
-              <Link to={l.to} onClick={() => setOpen(false)}
-                activeOptions={{ exact: l.to === "/" }}
-                activeProps={{ className: "bg-secondary text-navy" }}
-                className="block rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary">
+              <Link
+                to={l.to}
+                onClick={() => setOpen(false)}
+                className="block rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary [&.active]:bg-secondary [&.active]:text-navy"
+              >
                 {l.label}
               </Link>
             </li>
           ))}
           <li>
-            <Link to="/plan-trip" onClick={() => setOpen(false)} className="mt-2 block rounded-full bg-gold px-3 py-2.5 text-center text-sm font-semibold text-gold-foreground">
+            <Link
+              to="/plan-trip"
+              onClick={() => setOpen(false)}
+              className="mt-2 block rounded-full bg-gold px-3 py-2.5 text-center text-sm font-semibold text-gold-foreground"
+            >
               Plan Your Trip
             </Link>
           </li>
           <li>
-            <a href={wa} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="mt-1 flex items-center justify-center gap-2 rounded-full border px-3 py-2.5 text-center text-sm font-medium text-navy">
+            <a
+              href={wa}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="mt-1 flex items-center justify-center gap-2 rounded-full border px-3 py-2.5 text-center text-sm font-medium text-navy"
+            >
               <MessageCircle className="h-4 w-4 text-[#25D366]" /> WhatsApp Us
             </a>
           </li>
